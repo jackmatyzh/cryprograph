@@ -1,0 +1,109 @@
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+</head>
+<div>
+   
+      <?php 
+      global $wpdb;
+      $getBtc = $wpdb->get_row(" SELECT * FROM ".$wpdb->prefix."echange_rate11 ORDER BY ID DESC LIMIT 1");
+
+    
+     
+      ?>
+
+      <div class="converter">
+        <div class="container">
+         <h2>Cryptocurrency Converter</h2>
+         <p class="lead">Convert the currency</p>
+         <form class="form-inline">
+           <div class="form-group mb-2">
+              <input type="number" class="form-control" id="amount"/><div id="BTC" data-value="<?php print_r($getBtc->usdBTC); ?>">BTC</div>
+              <div class="to">to</div>
+              <select class="form-control" id="currency-2" required>
+                
+                <option tag="USD" value="1">USD</option>
+                <option name="ETH" value="<?php print_r($getBtc->usdETH); ?>">ETH</option>
+                <option name="USDT" value="<?php print_r($getBtc->usdUSDT); ?>">USDT</option>
+                <option name="BNB" value="<?php print_r($getBtc->usdBNB); ?>">BNB</option>
+                <option name="ADA" value="<?php print_r($getBtc->usdADA); ?>">ADA</option>
+                <option name="DOGE" value="<?php print_r($getBtc->usdDOGE); ?>">DOGE</option>
+                <option name="XRP" value="<?php print_r($getBtc->usdXRP); ?>">XRP</option>
+                <option name="USDC" value="<?php print_r($getBtc->usdUSDC); ?>">USDC</option>
+                <option name="DOT" value="<?php print_r($getBtc->usdDOT); ?>">DOT</option>
+                <option name="UNI" value="<?php print_r($getBtc->usdUNI); ?>">UNI</option>
+            
+              </select>
+            </div>
+            
+            <button class="btn calculate-btn btn-primary mb-2">Show me the result!</button>
+          </form>
+          <div class="result">
+            <p>
+              <span class="given-amount"></span> 
+              <span class="base-currency"></span>
+              <span class="final-result"></span> 
+              <span class="second-currency"></span>
+            </p>
+          </div>
+          <div>
+            <span class="history"></span>
+          </div>
+        </div> 
+      </div>
+      
+      
+      
+  </ul>  
+</div>
+</div>
+
+
+
+<script>
+
+
+
+var btn = document.querySelector('.calculate-btn');
+var baseCurrencyInput = document.getElementById('currency-1');
+var secondCurrencyInput = document.getElementById('currency-2');
+var amountInput = document.getElementById('amount');
+var toShowAmount = document.querySelector('.given-amount');
+var toShowSecond = document.querySelector('.second-currency');
+var toShowResult = document.querySelector('.final-result');
+
+
+
+
+function convertCurrency(event) {
+  event.preventDefault();
+  var amount = amountInput.value;
+  var from = <?php print_r($getBtc->usdBTC); ?>;
+  var to = secondCurrencyInput.value;
+  var currencyName = secondCurrencyInput.text;
+  var result = 0;
+  var text = document.getElementById('currency-2').selectedOptions[0].text;
+  try{
+    
+     result = (amount * from) / to;
+  
+  }
+  catch(err) {
+     result = amount * (1 / crrncy[to][from]);
+  }
+  
+  toShowAmount.innerHTML = amount;
+ 
+ 
+  toShowResult.textContent ='BTC' + ' = ' + round(result,4) + ' ' + text; 
+}
+
+btn.addEventListener('click', convertCurrency);
+
+
+
+
+
+
+</script>
